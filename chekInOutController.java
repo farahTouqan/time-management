@@ -1,4 +1,4 @@
-package sample.controller;
+package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class check implements Initializable {
+public class chekInOutController implements Initializable {
     @FXML
     private Label homei;
     @FXML
@@ -42,7 +42,6 @@ public class check implements Initializable {
     public String cn;
     public int late;
     public int entertime;
-
 
     @FXML
     public void homei (ActionEvent event) throws IOException {
@@ -76,7 +75,7 @@ public class check implements Initializable {
             String searchStr = "select Name from company where ID = " + LogInCVController.companyID;
             ResultSet check = s.executeQuery(searchStr);
             check.next() ;
-            cn = check.getString(1) ;
+             cn = check.getString(1) ;
             s = con.createStatement();
             searchStr = "select Photo from employees where ID = " + LogInCVController.userID;
             check = s.executeQuery(searchStr);
@@ -103,6 +102,7 @@ public class check implements Initializable {
     }
     @FXML
     public void in (ActionEvent event) throws IOException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
         LocalDate localDate = LocalDate.now();
         localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm");
@@ -112,23 +112,22 @@ public class check implements Initializable {
         String[] hourMin = time1.split(":");
         int hour = Integer.parseInt(hourMin[0]);
         entertime=hour;
-        int min= Integer.parseInt(hourMin[1]);
         System.out.println(hour);
-        int late1=0;
+        float late=0;
         try {
 
             Unit u = new Unit();
             Connection con = u.mySQLConnect();
-            String query1 = "insert into workhours(EntryTime,LateHours,WorkDay,id) values (?,?,?,?)";
+            String query1 = "insert into workhours(EntryTime,LateHours,WorkDay,id,companyName) values (?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(query1);
             st.setTime(1,(time));
             if(hour!=8){
-                late1=hour-8;
-                late=late1;
+                late=hour-8;
             }
             st.setFloat(2,(late));
             st.setDate(3,Date.valueOf(localDate));
             st.setInt(4,LogInCVController.userID);
+            st.setString(5,cn);
             st.executeUpdate();
 
         }
@@ -160,9 +159,20 @@ public class check implements Initializable {
             st.setTime(1,(time));
             Eworkhours=hour-entertime;
             early=15-hour;
-            lh=late+early;
+            lh=7-Eworkhours;
             st.setFloat(2,Eworkhours);
             st.setFloat(3,lh);
+            st.executeUpdate();
+
+            String searchStr = "select RemVacDay from employees where id="+LogInCVController.userID;
+            ResultSet check = s.executeQuery(searchStr);
+            check.next() ;
+            float ff = check.getFloat(1) ;
+
+            query1 = "update employees set RemVacDay= ? where id="+LogInCVController.userID;
+            st = con.prepareStatement(query1);
+            ff = ff - (lh/7) ;
+            st.setFloat(1,ff);
             st.executeUpdate();
         }
         catch (SQLException throwables) {
