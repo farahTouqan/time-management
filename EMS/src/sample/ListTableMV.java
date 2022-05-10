@@ -1,9 +1,9 @@
 package sample;
 
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.text.SimpleDateFormat;
 
 public class ListTableMV {
     public SimpleStringProperty Name = new SimpleStringProperty();
@@ -11,9 +11,23 @@ public class ListTableMV {
     public SimpleStringProperty EndDate = new SimpleStringProperty();
     public SimpleIntegerProperty NumOfReqDays = new SimpleIntegerProperty();
     public SimpleStringProperty Type = new SimpleStringProperty();
-    public SimpleIntegerProperty NumOfRemDays = new SimpleIntegerProperty();
+    public SimpleFloatProperty NumOfRemDays = new SimpleFloatProperty();
     public SimpleIntegerProperty ID = new SimpleIntegerProperty();
     public SimpleIntegerProperty flag = new SimpleIntegerProperty();
+
+    public int getEmpID() {
+        return EmpID.get();
+    }
+
+    public SimpleIntegerProperty empIDProperty() {
+        return EmpID;
+    }
+
+    public void setEmpID(int empID) {
+        this.EmpID.set(empID);
+    }
+
+    public SimpleIntegerProperty EmpID = new SimpleIntegerProperty();
 
     public void setName(String name) {
         this.Name.set(name);
@@ -67,8 +81,6 @@ public class ListTableMV {
         return Name;
     }
 
-
-
     public int getNumOfReqDays() {
         return NumOfReqDays.get();
     }
@@ -85,11 +97,11 @@ public class ListTableMV {
         return Type;
     }
 
-    public int getNumOfRemDays() {
+    public float getNumOfRemDays() {
         return NumOfRemDays.get();
     }
 
-    public SimpleIntegerProperty numOfRemDaysProperty() {
+    public SimpleFloatProperty numOfRemDaysProperty() {
         return NumOfRemDays;
     }
 

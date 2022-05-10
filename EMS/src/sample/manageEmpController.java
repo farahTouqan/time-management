@@ -26,8 +26,6 @@ public class manageEmpController implements Initializable {
     @FXML
     private DatePicker Birthdate;
     @FXML
-    private Button ImgButton,searchBut,updateBut,deleteBut,LogoutBut,addBut;
-    @FXML
     private PasswordField password;
     @FXML
     private ImageView profilePhoto ; ;
@@ -257,8 +255,9 @@ public class manageEmpController implements Initializable {
     }
 
     public void showProfile(ActionEvent event) throws IOException {
+        profileController.id = LogInCVController.userID ;
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Stage root = FXMLLoader.load(getClass().getResource("profile.fxml"));
+        Stage root = FXMLLoader.load(getClass().getResource("Eprofile.fxml"));
         stage.setScene(root.getScene());
         stage.setResizable(false);
     }
@@ -301,6 +300,23 @@ public class manageEmpController implements Initializable {
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static int getEmpNum(){
+        int num = 0 ;
+        try {
+            Unit u = new Unit();
+            Connection con = u.mySQLConnect();
+            Statement s = con.createStatement();
+            String searchStr = "select count(*) from employees where companyName = '" + LogInCVController.companyNamee +"'";
+            ResultSet check = s.executeQuery(searchStr);
+            check.next();
+            num = check.getInt(1);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return num;
     }
 }
 

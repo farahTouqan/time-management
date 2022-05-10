@@ -29,7 +29,7 @@
                </ImageView>
                <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="53.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@photos/employees.png" />
+                     <Image url="@photos/employees (1).png" />
                   </image>
                </ImageView>
                <ImageView fitHeight="39.0" fitWidth="31.0" layoutX="53.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">

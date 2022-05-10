@@ -31,6 +31,7 @@ public class LogInCVController implements Initializable {
     public static int position;
     public static int companyID;
     public static String companyCVName;
+    public static String companyNamee;
     public static File f ;
     @FXML
     private AnchorPane CVPane,loginPane;
@@ -169,9 +170,64 @@ public class LogInCVController implements Initializable {
         Connection con = u.mySQLConnect();
         Statement st = con.createStatement();
         InputStream in = new FileInputStream(f);
+//        System.out.println(in);
         String s = "insert into CV (CV,CompanyName) values(?,'"+companyCVName+"')" ;
         PreparedStatement pstmt = con.prepareStatement(s);
         pstmt.setBlob(1, in);
         pstmt.execute();
+    }
+
+    public static String logInn (int empID,String empPswd ) throws IOException{
+        Unit u = new Unit();
+        String idStr;
+        String searchStr ;
+        int temp = 0 ;
+        try {
+            Connection con = u.mySQLConnect();
+            Statement s = con.createStatement();
+            searchStr = "select count(ID) from employees where ID = " + empID ;
+            ResultSet check = s.executeQuery(searchStr);
+            check.next();
+            temp += check.getInt(1) ;
+
+            searchStr = "select count(ID) from managers where ID = " + empID ;
+            check = s.executeQuery(searchStr);
+            check.next();
+            temp += check.getInt(1) ;
+
+            if(temp == 0){
+                return "ID not found";
+            }
+            else {
+                position = Integer.parseInt(String.valueOf(empID).substring(2,3));
+                if (position == 0) {
+                    idStr = "select password from employees where ID = " + empID;
+                    ResultSet rs = s.executeQuery(idStr);
+                    rs.next();
+                    if(rs.getString(1) .equals(empPswd)) {
+                        return "logged in successfully" ;
+                    }
+                    else {
+                        return "incorrect password" ;
+                    }
+                }
+                else if (position == 1){
+                    idStr = "select password from managers where ID = " + empID;
+                    ResultSet rs = s.executeQuery(idStr);
+                    rs.next();
+                    if(rs.getString(1) .equals(empPswd)) {
+                        return "logged in successfully" ;
+                    }
+                    else {
+                        return "incorrect password" ;
+
+                    }
+                }
+            }
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return "" ;
     }
 }

@@ -55,8 +55,9 @@ public class ManagerHomeController implements Initializable {
 
 
     public void showProfile(ActionEvent event) throws IOException {
+        profileController.id = LogInCVController.userID ;
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Stage root = FXMLLoader.load(getClass().getResource("profile.fxml"));
+        Stage root = FXMLLoader.load(getClass().getResource("Eprofile.fxml"));
         stage.setScene(root.getScene());
         stage.setResizable(false);
     }
@@ -86,13 +87,11 @@ public class ManagerHomeController implements Initializable {
             String pn = check.getString(1) ;
             Image MImage = new Image(getClass().getResourceAsStream("/employeesPhotos/"+pn));
             profilePhoto.setImage(MImage);
-
-            System.out.println(LogInCVController.companyID);
              searchStr = "select Name from company where ID = " + LogInCVController.companyID;
              check = s.executeQuery(searchStr);
             check.next() ;
             String cn = check.getString(1) ;
-            System.out.println(cn);
+            LogInCVController.companyNamee = cn ;
             companyName.setText(cn);
         }
         catch (SQLException throwables) {

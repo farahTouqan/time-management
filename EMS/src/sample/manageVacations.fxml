@@ -45,7 +45,6 @@
                      <Font name="Arial Bold" size="13.0" />
                   </font>
                </Button>
-               <TextField layoutX="332.0" layoutY="21.0" opacity="0.0" />
                <TableView fx:id="MVTable" layoutX="91.0" layoutY="203.0" prefHeight="318.0" prefWidth="634.0" style="-fx-background-color: white;">
                  <columns>
                    <TableColumn fx:id="Name" prefWidth="75.0" style="-fx-background-color: white;" text="Name" />
@@ -67,12 +66,15 @@
                      <Font name="Arial Bold" size="13.0" />
                   </font>
                </Button>
-               <ImageView fx:id="profilePhoto" fitHeight="23.0" fitWidth="22.0" layoutX="500.0" layoutY="117.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="23.0" fitWidth="22.0" layoutX="500.0" layoutY="117.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@photos/close.png" />
                   </image></ImageView>
                <Button layoutX="500.0" layoutY="113.0" minWidth="22.0" mnemonicParsing="false" onAction="#close" prefHeight="19.0" prefWidth="22.0" scaleShape="false" style="-fx-background-radius: 100; -fx-background-color: transparent;" />
                <Button fx:id="backHome" accessibleText="backToHome" layoutX="7.0" layoutY="524.0" mnemonicParsing="false" onAction="#backHome" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-color: #1aaba6;" text="Back To Home" textFill="#1aaba6" />
+               <ImageView fx:id="profilePhoto" fitHeight="40.0" fitWidth="42.0" layoutX="757.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+               <Button layoutX="757.0" layoutY="7.0" minWidth="43.0" mnemonicParsing="false" onAction="#showProfile" prefHeight="38.0" prefWidth="43.0" scaleShape="false" style="-fx-background-radius: 100; -fx-background-color: transparent;" />
+               <TextField fx:id="companyName" alignment="CENTER" editable="false" layoutX="299.0" layoutY="18.0" prefHeight="27.0" prefWidth="195.0" promptText="company name" style="-fx-background-color: transparent;" />
               </children></AnchorPane>
         </Scene>
     </scene>
